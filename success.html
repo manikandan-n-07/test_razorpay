@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Success</title>
+    <style>body{font-family:Arial;text-align:center;margin-top:100px;} div{max-width:400px;margin:auto;padding:20px;border:1px solid #c3e6cb;background:#d4edda;border-radius:8px;}</style>
+</head>
+<body>
+    <div>
+        <h2 style="color:#155724">🎉 Payment Verified Successfully!</h2>
+        <p>Your pass allocation identifier is: <b id="pid">Checking...</b></p>
+        <a href="index.html">Return to Storefront</a>
+    </div>
+    <script>document.getElementById('pid').innerText = new URLSearchParams(window.location.search).get('payment_id') || 'N/A';</script>
+</body>
+</html>

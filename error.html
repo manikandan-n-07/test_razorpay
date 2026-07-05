@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Transaction Failed</title>
+    <style>body{font-family:Arial;text-align:center;margin-top:100px;} div{max-width:400px;margin:auto;padding:20px;border:1px solid #f5c6cb;background:#f8d7da;border-radius:8px;}</style>
+</head>
+<body>
+    <div>
+        <h2 style="color:#721c24">❌ Transaction Aborted</h2>
+        <p id="msg">The operation could not be completed at this time.</p>
+        <a href="index.html">Attempt Checkout Again</a>
+    </div>
+    <script>document.getElementById('msg').innerText = new URLSearchParams(window.location.search).get('reason') || 'Transaction cancelled.';</script>
+</body>
+</html>
