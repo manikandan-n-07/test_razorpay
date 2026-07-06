@@ -64,18 +64,21 @@
 
     async function initiatePayment(amountValue) {
         try {
-            // Sends the amount dynamically to the backend order creator
+            // Sends {"amount": 500} directly to the backend over the network payload pipe
             const response = await fetch('https://urlz.site/create-order', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: amountValue })
+                headers: { 
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify({ amount: amountValue }) 
             });
+            
             const order = await response.json();
 
             const config = {
                 "key": "rzp_test_T9poNYf9vB840A", 
-                "amount": order.amount, // Synchronized with backend order response
-                "currency": "INR",
+                "amount": order.amount, // Explicitly reads what your backend generated
+                "currency": order.currency,
                 "name": "Event Portal",
                 "description": "Standard Entry Pass",
                 "order_id": order.id,
@@ -86,9 +89,6 @@
                     "name": loggedInUser ? loggedInUser.name : "",
                     "email": loggedInUser ? loggedInUser.email : "",
                     "contact": ""
-                },
-                "notes": {
-                    "shipping_address": "Collected via checkout interface"
                 },
                 "modal": {
                     "ondismiss": function() {
