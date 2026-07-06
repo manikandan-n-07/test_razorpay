@@ -38,38 +38,33 @@
 </div>
 
 <script>
-   
     let loggedInUser = null;
 
-    // Read Google profile data directly from the URL params on load
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         const name = urlParams.get('name');
         const email = urlParams.get('email');
         const avatar = urlParams.get('avatar');
-        
+
         if (name && email && avatar) {
-            // Save user details to global state object
             loggedInUser = {
                 name: decodeURIComponent(name),
                 email: decodeURIComponent(email),
                 avatar: decodeURIComponent(avatar)
             };
-            
-            // Render details cleanly on screen
+
             document.getElementById('userName').innerText = loggedInUser.name;
             document.getElementById('userEmail').innerText = loggedInUser.email;
             document.getElementById('userAvatar').src = loggedInUser.avatar;
             document.getElementById('appContainer').style.display = 'block';
         } else {
-            // If parameters aren't present, kick user back to login page
             window.location.href = 'index.html';
         }
     };
 
-    // Handle Order Dispatch and Process Razorpay Checkout Lifecycles
     async function initiatePayment(amountValue) {
         try {
+            // Sends the amount dynamically to the backend order creator
             const response = await fetch('https://urlz.site/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -79,8 +74,8 @@
 
             const config = {
                 "key": "rzp_test_T9poNYf9vB840A", 
-                "amount": order.amount,
-                "currency": order.currency,
+                "amount": order.amount, // Synchronized with backend order response
+                "currency": "INR",
                 "name": "Event Portal",
                 "description": "Standard Entry Pass",
                 "order_id": order.id,
@@ -114,7 +109,6 @@
             window.location.href = "error.html?reason=Could not initialize payment window";
         }
     }
-
 </script>
 </body>
 </html>
