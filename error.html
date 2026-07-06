@@ -1,15 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><title>Transaction Failed</title>
-    <style>body{font-family:Arial;text-align:center;margin-top:100px;} div{max-width:400px;margin:auto;padding:20px;border:1px solid #f5c6cb;background:#f8d7da;border-radius:8px;}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f5f7fb; margin: 0; }
+        .card { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; max-width: 450px; width: 100%; }
+        .icon { font-size: 50px; color: #e74c3c; margin-bottom: 20px; }
+        h2 { color: #333; margin: 0 0 10px 0; }
+        p { color: #666; font-size: 15px; line-height: 1.5; margin-bottom: 25px; }
+        .error-box { background: #fff5f5; border: 1px solid #fed7d7; padding: 15px; border-radius: 6px; font-size: 14px; color: #c53030; margin-bottom: 30px; font-weight: 500; }
+        .btn { display: inline-block; background: #e74c3c; color: white; text-decoration: none; padding: 12px 24px; font-weight: 600; border-radius: 6px; transition: background 0.2s; }
+        .btn:hover { background: #c0392b; }
+    </style>
 </head>
 <body>
-    <div>
-        <h2 style="color:#721c24">❌ Transaction Aborted</h2>
-        <p id="msg">The operation could not be completed at this time.</p>
-        <a href="index.html">Attempt Checkout Again</a>
+
+<div class="card">
+    <div class="icon">✕</div>
+    <h2>Transaction Failed</h2>
+    <p>Your payment request could not be processed completely. No funds were deducted from your account balance.</p>
+    
+    <div id="errorReasonDisplay" class="error-box">
+        Reason: Processing error
     </div>
-    <script>document.getElementById('msg').innerText = new URLSearchParams(window.location.search).get('reason') || 'Transaction cancelled.';</script>
+
+    <a href="pass-payment.html" class="btn">Try Again</a>
+</div>
+
+<script>
+    // Extract the failure reason parameter from the browser's URL bar
+    const urlParams = new URLSearchParams(window.location.search);
+    const reason = urlParams.get('reason');
+
+    // Display it cleanly inside the HTML layout template
+    if (reason) {
+        document.getElementById('errorReasonDisplay').innerText = "Reason: " + decodeURIComponent(reason);
+    } else {
+        document.getElementById('errorReasonDisplay').innerText = "Reason: Unknown dynamic system failure.";
+    }
+</script>
+
 </body>
 </html>
