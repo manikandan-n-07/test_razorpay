@@ -66,12 +66,15 @@
         try {
             // Sends {"amount": 500} directly to the backend over the network payload pipe
             const response = await fetch('https://urlz.site/create-order', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify({ amount: amountValue }) 
-            });
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+        amount: amountValue,
+        email: loggedInUser ? loggedInUser.email : 'unknown@email.com',
+        userName: loggedInUser ? loggedInUser.name : 'Unknown User'
+    }) 
+});
+
             
             const order = await response.json();
 
